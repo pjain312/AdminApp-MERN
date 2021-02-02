@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import '../style/form.css';
-import {useDispatch, connect} from 'react-redux';
+import {connect} from 'react-redux';
 import{ addSubject} from "../actions/actions";
-import { ADD_SUBJECT } from '../actions/action-types';
 
 
 const AddSubject = ({addSubject}) => {

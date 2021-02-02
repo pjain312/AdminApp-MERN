@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import '../style/form.css';
-import {useDispatch, connect} from 'react-redux';
+import {connect} from 'react-redux';
 import {addFaculty} from '../actions/actions';
 
 
