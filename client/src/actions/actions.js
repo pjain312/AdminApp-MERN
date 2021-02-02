@@ -1,4 +1,4 @@
-import {ADD_FACULTY, ADD_STUDENT, ADD_SUBJECT, GET_STUDENTS, GET_SUBJECTS, SET_CURR_USER, UPLOAD_MARKS} from './action-types';
+import {ADD_FACULTY, ADD_STUDENT, ADD_SUBJECT, GET_STUDENTS, GET_SUBJECTS, SET_CURR_USER, UPLOAD_MARKS,SEND_MAIL} from './action-types';
 import axios from 'axios';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import jwt from 'jsonwebtoken';
@@ -133,6 +133,23 @@ export const uploadMarks = (mark) => {
 
         catch (err) {
             console.log('error in uploading marks', err);
+            
+        }
+    }
+}
+
+export const sendMail = (values) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.post('http://localhost:8000/api/v1/sendmail', values);
+            dispatch({
+                type: SEND_MAIL,
+                payload: data
+            });
+        }
+
+        catch (err) {
+            console.log('error in sending mail', err);
             
         }
     }

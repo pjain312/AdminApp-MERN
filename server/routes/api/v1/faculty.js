@@ -10,6 +10,7 @@ router.post('/add-subject' ,  facultyController.addSubject);
 router.get('/getStudents' , facultyController.getAllStudents);
 router.get('/getSubjects' ,  facultyController.getAllSubjects);
 router.post('/uploadMarks',facultyController.uploadMarks);
+router.post('/sendmail', facultyController.sendResult);
 
 module.exports = router;
 

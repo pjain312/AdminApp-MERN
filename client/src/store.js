@@ -16,7 +16,6 @@ const rootReducer = combineReducers({
   studentReducer,
   auth,
 });
-console.log('store:',subjectReducer);
 const middleware = [thunk];
 
 const store = createStore(

@@ -3,6 +3,7 @@ const Student = require('../models/students');
 const Subject = require('../models/subject');
 const Marks = require('../models/marks');
 const jwt = require('jsonwebtoken');
+const sendEmail = require ('../config/nodemailer');
 
 module.exports = {
     addFaculty: async (req, res, next) => {
@@ -163,9 +164,9 @@ module.exports = {
 
     uploadMarks: async (req, res, next) => {
         try {
-            const { subject, student, totalMarks, marks} = req.body
+            const { subjectCode, subjectName, student, totalMarks, marks} = req.body
             
-            const isAlready = await Marks.find({ student,subject})
+            const isAlready = await Marks.find({ student,subjectCode})
             if (isAlready.length !== 0) {
                 
                 return res.status(400).json({message: "You have already uploaded marks of this subject"});
@@ -173,18 +174,34 @@ module.exports = {
            
                 const newMarks = await new Marks({
                     student,
-                    subject,
+                    subjectCode,
+                    subjectName,
                     marks,
                     totalMarks
                 })
                 await newMarks.save()
-            
+            alert("Marks Uploaded Successfully");
             res.status(200).json({message:"Marks uploaded successfully"})
+            
         }
         catch (err) {
-            console.log("Error in uploading marks",err.message)
+            console.log(`Error in uploading marks",${err.message}`)
         }
         
+    },
+
+    sendResult: async (req, res) => {
+        try{
+            const {email, marks, totalMarks,subjectName} = req.body;
+            await sendEmail(email, marks, totalMarks,subjectName);
+            alert("Mail Sent Successfully");
+            res.status(200).json({ message: "mail sent successfully" });
+            
+        }
+
+        catch(err){
+            res.status(400).json({ message: `error in sending email", ${err.message}` })
+        }
     }
 
 
