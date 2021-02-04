@@ -5,16 +5,11 @@ import {connect} from 'react-redux';
 import {getSubjects} from '../actions/actions'
 
 const AllSubjects = ({subjectReducer, getSubjects}) =>{
-    const handleSubmit= (e) =>{
-        e.preventDefault();
-        getSubjects();
-    }
+    
     const subjects = subjectReducer[0];
     return(
         <React.Fragment>
-                    <div className ="">
-                    <button type="submit" onClick ={handleSubmit}>Show All Subjects</button> 
-                </div>
+                    
 
                 <div className="col-md-8">
                 {subjectReducer.length !== 0 && <table className="table border">

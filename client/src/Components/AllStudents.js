@@ -1,22 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../style/form.css';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-import {getStudents} from '../actions/actions'
+import {  getStudentSubjects, addStudentSubjects } from '../actions/actions'
 
-const AllStudents = ({studentReducer, getStudents}) =>{
-    const handleSubmit= (e) =>{
+const AllStudents = ({ studentReducer, getStudentSubjects, addStudentSubjects, subjectReducer }) => {
+
+
+    const handleSubjects = (e, id) => {
         e.preventDefault();
-        getStudents();
+        getStudentSubjects(id);
     }
-    const students = studentReducer[0];
-    return(
-        <React.Fragment>
-                    <div className ="">
-                    <button type="submit" onClick ={handleSubmit}>Show All Students</button> 
-                </div>
+    const handleStudentSubjects = (e, id, selected) => {
+        e.preventDefault();
+        addStudentSubjects(id, selected);
+    }
 
-                <div className="col-md-8">
+    const students = studentReducer[0];
+    const subjects = subjectReducer[0];
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
+    const [value, setValue] = useState(false);
+    const [selected, setSelected] = useState([]);
+    
+
+    return (
+        <React.Fragment>
+
+            <div className="col-md-8">
                 {studentReducer.length !== 0 && <table className="table border">
                     <thead>
                         <tr>
@@ -32,7 +47,7 @@ const AllStudents = ({studentReducer, getStudents}) =>{
                     </thead>
                     <tbody>
                         {
-                            students.map((res, index) =>
+                            students.map((res) =>
                                 <tr key={res._id}>
                                     <td>{res.name}</td>
                                     <td>{res.email}</td>
@@ -42,27 +57,58 @@ const AllStudents = ({studentReducer, getStudents}) =>{
                                     <td>{res.dob}</td>
                                     <td>{res.studentMobileNumber}</td>
                                     <td>{res.fatherMobileNumber}</td>
-
+                                    <td><button onClick={(e) => { handleSubjects(e, res._id); toggle(); }} >Add Subjects</button></td>
+                                    <Modal isOpen={modal} toggle={toggle}>
+                                        <ModalHeader toggle={toggle}> Subjects</ModalHeader>
+                                        <ModalBody>
+                                            <form onSubmit={(e) => handleStudentSubjects(e, res._id, selected)}>
+                                                {
+                                                    typeof (subjects) !== "undefined" ?
+                                                        subjects.map((sub) =>
+                                                            <div>
+                                                                <label>{sub.subjectName}
+                                                                    <input type="checkbox" name={sub.subjectName} value={value} onChange={(e) => {
+                                                                        setSelected([...selected, sub.subjectName])
+                                                                        setValue(!value)
+                                                                    }} />
+                                                                </label>
+                                                            </div>
+                                                        )
+                                                        :
+                                                        console.log("not now")
+                                                }
+                                                <button type="submit"> Add Subjects</button>
+                                            </form>
+                                        </ModalBody>
+                                    </Modal>
                                 </tr>
                             )
                         }
                     </tbody>
                 </table>}
 
-                </div>
+            </div>
         </React.Fragment>
-        
+
     );
 }
 
 const mapStateToProps = (state) => ({
-    studentReducer : state.studentReducer,
+                studentReducer: state.studentReducer,
+    subjectReducer: state.subjectReducer,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    getStudents: () => {
-      dispatch(getStudents());
-    },
-  });
+const mapDispatchToProps = (dispatch) => {
+    return {
+        
+        getStudentSubjects: (id) => {
+                dispatch(getStudentSubjects(id));
+        },
+        addStudentSubjects: (id, selected) => {
+                dispatch(addStudentSubjects(id, selected));
+        },
+    };
+
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllStudents);

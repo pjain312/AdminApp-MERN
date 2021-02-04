@@ -11,6 +11,8 @@ router.get('/getStudents' , facultyController.getAllStudents);
 router.get('/getSubjects' ,  facultyController.getAllSubjects);
 router.post('/uploadMarks',facultyController.uploadMarks);
 router.post('/sendmail', facultyController.sendResult);
+router.get ('/studentSubjects', facultyController.getStudentSubjects);
+router.post('/addStudentSubjects', facultyController.addStudentSubjects);
 
 module.exports = router;
 

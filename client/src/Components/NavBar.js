@@ -18,7 +18,7 @@ const NavBar = () =>{
                 <Nav className='mr-auto' navbar>
                     <NavItem>
                         <NavLink>
-                            <Link to = "/login"> Sign In </Link>
+                            <Link to = "/"> Sign In </Link>
                         </NavLink>
                     </NavItem>
                     <NavItem>
@@ -30,7 +30,7 @@ const NavBar = () =>{
             </Navbar>
 
             <Switch>
-                <Route exact path = "/login">
+                <Route exact path = "/">
                     <Login />
                 </Route>
                 <Route exact path = "/Signup">

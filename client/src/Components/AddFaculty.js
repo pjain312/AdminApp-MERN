@@ -29,6 +29,14 @@ const AddFaculty = ({addFaculty}) => {
         };
 
         addFaculty(faculty);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setDesignation("");
+        setGender("");
+        setDob("");
+        setMobile("");
+        setJoiningDate("");
     }
     return(
             <React.Fragment>

@@ -9,7 +9,7 @@ import { setCurrUser } from "./actions/actions";
 import jwt from 'jsonwebtoken';
 
 
-const initialState = {};
+const initialState = [];
 
 const rootReducer = combineReducers({
   subjectReducer,
