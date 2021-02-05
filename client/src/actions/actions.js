@@ -78,13 +78,13 @@ export const addStudent = (student) => {
                 type: ADD_STUDENT,
                 payload: data
             });
-            alert("Student Added Successfully");
+            await alert("Student Added Successfully");
 
         }
 
     catch (err) {
         console.log('error in adding student', err);
-        
+        alert ("Email ID already registered");
     }
 }
 }
@@ -98,12 +98,12 @@ export const addFaculty = (faculty) => {
                 type: ADD_FACULTY,
                 payload: data
             });
-            alert("Faculty Added Successfully");
+            await alert("Faculty Added Successfully");
 
         }
     catch (err) {
         console.log('error in adding faculty', err);
-        
+        alert("Email ID already registered");
     }
 }
 }
@@ -118,13 +118,13 @@ export const addSubject = (subject) => {
                     type: ADD_SUBJECT,
                     payload: data
                 });
-                return alert("Subject Added Successfully");
+                await alert("Subject Added Successfully");
 
             }
 
         catch (err) {
             console.log('error in adding subject', err);
-            
+            alert("Subject already added");
         }
     }
     
@@ -163,6 +163,7 @@ export const addStudentSubjects = (id, selected) => {
                 type: UPLOAD_MARKS,
                 payload: data
             });
+            await alert("Subjects Added Successfully");
         }
 
         catch (err) {
@@ -181,11 +182,12 @@ export const uploadMarks = (mark) => {
                 type: UPLOAD_MARKS,
                 payload: data
             });
-        }
+            await alert("Marks Uploaded and Mail sent successfully");
 
+        }
         catch (err) {
             console.log('error in uploading marks', err);
-            
+            alert("Marks Already uploaded for this subject");
         }
     }
 }
@@ -198,6 +200,8 @@ export const sendMail = (values) => {
                 type: SEND_MAIL,
                 payload: data
             });
+
+
         }
 
         catch (err) {

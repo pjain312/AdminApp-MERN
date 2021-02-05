@@ -64,8 +64,8 @@ const AllStudents = ({ studentReducer, getStudentSubjects, addStudentSubjects, s
                                             <form onSubmit={(e) => handleStudentSubjects(e, res._id, selected)}>
                                                 {
                                                     typeof (subjects) !== "undefined" ?
-                                                        subjects.map((sub) =>
-                                                            <div>
+                                                        subjects.map((sub, index) =>
+                                                            <div key = {index}>
                                                                 <label>{sub.subjectName}
                                                                     <input type="checkbox" name={sub.subjectName} value={value} onChange={(e) => {
                                                                         setSelected([...selected, sub.subjectName])

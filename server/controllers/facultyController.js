@@ -14,11 +14,6 @@ module.exports = {
             const { name, email, designation, password, joiningYear, facultyMobileNumber, dob, gender } = req.body
             const faculty = await Faculty.findOne({ email })
             if (faculty) {
-                // new Noty({
-                //     type:"error",
-                //     layout: "topRight",
-                //     text: 'Faculty Already exist'
-                // }).show();
                 return res.status(400).json({ message: "Email already exists" });
 
             }
@@ -33,21 +28,11 @@ module.exports = {
                 joiningYear
             })
             await newFaculty.save()
-            // new Noty({
-            //     type:"success",
-            //     layout: "topRight",
-            //     text: 'Faculty Added Successfully'
-            // }).show();
             
             res.status(200).json({ result: newFaculty });
             res.redirect('/login')
         }
         catch (err) {
-            // new Noty({
-            //     type:"error",
-            //     layout: "topRight",
-            //     text: 'Faculty Already exist'
-            // }).show();
             res.status(400).json({ message: `error in adding new Faculty", ${err.message}` })
         }
     },
