@@ -123,7 +123,7 @@ module.exports = {
 
             for (const item in selected) {
 
-                var newvalues = { $push: { subjects: selected[item] } };
+                var newvalues = { $addToSet: { subjects: selected[item] } };
                 Student.updateOne(myquery, newvalues, function (err, res) {
                     if (err) { console.log(err); }
                     else {
@@ -193,6 +193,19 @@ module.exports = {
         catch (err) {
             console.log(`error in adding new subject", ${err.message}`)
         }
+    },
+
+    getFaqSubjects: async (req, res, next) => {
+        try {
+            const id = req.query.id;
+            const studentR = await Student.findOne({_id:id})
+            const subjectR = studentR.subjects
+            res.status(200).json(subjectR);
+        }
+        catch (err) {
+            res.status(400).json({ message: `error in getting subjects", ${err.message}` })
+        }
+
     },
 
     getAllSubjects: async (req, res, next) => {

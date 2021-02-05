@@ -1,19 +1,21 @@
-import {ADD_FACULTY, ADD_STUDENT, ADD_SUBJECT, GET_STUDENTS, GET_SUBJECTS,GET_STUDENT_SUBJECTS, SET_CURR_USER,
-    DELETE_STUDENT, UPLOAD_MARKS,SEND_MAIL} from './action-types';
+import {
+    ADD_FACULTY, ADD_STUDENT, ADD_SUBJECT, GET_STUDENTS, GET_SUBJECTS, GET_STUDENT_SUBJECTS, SET_CURR_USER,
+    DELETE_STUDENT, FAQ_SUBJECTS, UPLOAD_MARKS, SEND_MAIL
+} from './action-types';
 import axios from 'axios';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import jwt from 'jsonwebtoken';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const setCurrUser = (user) =>{
-    return{
+export const setCurrUser = (user) => {
+    return {
         type: SET_CURR_USER,
         user
     };
 }
 export const login = (creds) => {
     return dispatch => {
-        return axios.post('http://localhost:8000/api/v1/faculty-login', creds).then (res => {
+        return axios.post('http://localhost:8000/api/v1/faculty-login', creds).then(res => {
 
             const token = res.data.data.token;
             localStorage.setItem('jwtToken', token);
@@ -33,11 +35,11 @@ export const logout = () => {
     }
 }
 
-export const getSubjects = () =>{
+export const getSubjects = () => {
     return async (dispatch) => {
         try {
-            const data  = await axios.get('http://localhost:8000/api/v1/getSubjects');
-          
+            const data = await axios.get('http://localhost:8000/api/v1/getSubjects');
+
             dispatch({
                 type: GET_SUBJECTS,
                 payload: data.data
@@ -46,16 +48,16 @@ export const getSubjects = () =>{
 
         catch (err) {
             console.log('error in fetching All subjects', err);
-            
+
         }
     }
 }
 
 
-export const getStudents = () =>{
+export const getStudents = () => {
     return async (dispatch) => {
         try {
-            const data  = await axios.get('http://localhost:8000/api/v1/getStudents');
+            const data = await axios.get('http://localhost:8000/api/v1/getStudents');
             dispatch({
                 type: GET_STUDENTS,
                 payload: data.data
@@ -64,7 +66,7 @@ export const getStudents = () =>{
 
         catch (err) {
             console.log('error in fetching student students', err);
-            
+
         }
     }
 }
@@ -82,11 +84,11 @@ export const addStudent = (student) => {
 
         }
 
-    catch (err) {
-        console.log('error in adding student', err);
-        alert ("Email ID already registered");
+        catch (err) {
+            console.log('error in adding student', err);
+            alert("Email ID already registered");
+        }
     }
-}
 }
 
 export const addFaculty = (faculty) => {
@@ -101,43 +103,43 @@ export const addFaculty = (faculty) => {
             await alert("Faculty Added Successfully");
 
         }
-    catch (err) {
-        console.log('error in adding faculty', err);
-        alert("Email ID already registered");
+        catch (err) {
+            console.log('error in adding faculty', err);
+            alert("Email ID already registered");
+        }
     }
-}
 }
 
 
 export const addSubject = (subject) => {
     return async (dispatch) => {
-            try {
-                const { data } = await axios.post('http://localhost:8000/api/v1/add-subject',subject);
+        try {
+            const { data } = await axios.post('http://localhost:8000/api/v1/add-subject', subject);
 
-                dispatch({
-                    type: ADD_SUBJECT,
-                    payload: data
-                });
-                await alert("Subject Added Successfully");
+            dispatch({
+                type: ADD_SUBJECT,
+                payload: data
+            });
+            await alert("Subject Added Successfully");
 
-            }
+        }
 
         catch (err) {
             console.log('error in adding subject', err);
             alert("Subject already added");
         }
     }
-    
+
 }
 
 export const getStudentSubjects = (id) => {
     return async (dispatch) => {
         try {
-            const data  = await axios.get('http://localhost:8000/api/v1/studentSubjects',{
+            const data = await axios.get('http://localhost:8000/api/v1/studentSubjects', {
                 params: {
-                  id: id
+                    id: id
                 }
-              });
+            });
             dispatch({
                 type: GET_STUDENT_SUBJECTS,
                 payload: data.data
@@ -146,86 +148,108 @@ export const getStudentSubjects = (id) => {
 
         catch (err) {
             console.log('error in fetching students subjects', err);
-            
         }
     }
 }
 
-export const addStudentSubjects = (id, selected) => {
+export const getFaqSubjects = (id) => {
     return async (dispatch) => {
         try {
-            console.log("selected in action" , selected)
-             await axios.post('http://localhost:8000/api/v1/addStudentSubjects',{
-                id: id,
-                selected:selected
-            });
-        
-            await alert("Subjects Added Successfully");
-        }
-
-        catch (err) {
-            console.log('error in Adding Student Subjects', err);
-            
-        }
-    }
-}
-
-export const deleteStudent = (id) => {
-    return async (dispatch) => {
-        try {
-            const data  = await axios.get('http://localhost:8000/api/v1/delete-student',{
+            const data = await axios.get('http://localhost:8000/api/v1/get-faq-subjects', {
                 params: {
-                  id: id
+                    id: id
                 }
-              });
+                
+            });
             dispatch({
-                type: DELETE_STUDENT,
+                type: FAQ_SUBJECTS,
                 payload: data.data
             });
-            await alert("Student deleted successfully");
+
+           
         }
 
-        catch (err) {
-            console.log('error in fetching students subjects', err);
-            
-        }
-    }
-}
-
-
-export const uploadMarks = (mark) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.post('http://localhost:8000/api/v1/uploadMarks',mark);
-            dispatch({
-                type: UPLOAD_MARKS,
-                payload: data
-            });
-            await alert("Marks Uploaded and Mail sent successfully");
-
-        }
-        catch (err) {
-            console.log('error in uploading marks', err);
-            alert("Marks Already uploaded for this subject");
+        catch(err){
+            console.log('error in fetching faq subjects', err);
         }
     }
 }
 
-export const sendMail = (values) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.post('http://localhost:8000/api/v1/sendmail', values);
-            dispatch({
-                type: SEND_MAIL,
-                payload: data
-            });
+    export const addStudentSubjects = (id, selected) => {
+        return async (dispatch) => {
+            try {
+                console.log("selected in action", selected)
+                await axios.post('http://localhost:8000/api/v1/addStudentSubjects', {
+                    id: id,
+                    selected: selected
+                });
 
+                await alert("Subjects Added Successfully");
+            }
 
-        }
+            catch (err) {
+                console.log('error in Adding Student Subjects', err);
 
-        catch (err) {
-            console.log('error in sending mail', err);
-            
+            }
         }
     }
-}
+
+    export const deleteStudent = (id) => {
+        return async (dispatch) => {
+            try {
+                const data = await axios.get('http://localhost:8000/api/v1/delete-student', {
+                    params: {
+                        id: id
+                    }
+                });
+                dispatch({
+                    type: DELETE_STUDENT,
+                    payload: data.data
+                });
+                await alert("Student deleted successfully");
+            }
+
+            catch (err) {
+                console.log('error in fetching students subjects', err);
+
+            }
+        }
+    }
+
+
+    export const uploadMarks = (mark) => {
+        return async (dispatch) => {
+            try {
+                const { data } = await axios.post('http://localhost:8000/api/v1/uploadMarks', mark);
+                dispatch({
+                    type: UPLOAD_MARKS,
+                    payload: data
+                });
+                await alert("Marks Uploaded and Mail sent successfully");
+
+            }
+            catch (err) {
+                console.log('error in uploading marks', err);
+                alert("Marks Already uploaded for this subject");
+            }
+        }
+    }
+
+    export const sendMail = (values) => {
+        return async (dispatch) => {
+            try {
+                const { data } = await axios.post('http://localhost:8000/api/v1/sendmail', values);
+                dispatch({
+                    type: SEND_MAIL,
+                    payload: data
+                });
+
+
+            }
+
+            catch (err) {
+                console.log('error in sending mail', err);
+
+            }
+        }
+    }

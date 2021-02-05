@@ -1,4 +1,4 @@
-import {GET_STUDENT_SUBJECTS, GET_SUBJECTS} from "../actions/action-types";
+import {GET_STUDENT_SUBJECTS, GET_SUBJECTS,FAQ_SUBJECTS} from "../actions/action-types";
 
 const initialState = [];
 
@@ -10,6 +10,9 @@ const subjectReducer= (state = initialState, action) => {
     
     case GET_STUDENT_SUBJECTS:
       return[action.payload]
+
+    case FAQ_SUBJECTS : 
+    return[action.payload]
 
     default:
         return state  

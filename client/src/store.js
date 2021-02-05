@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from 'redux-thunk';
 import subjectReducer from "./reducers/subjectReducer";
 import studentReducer from "./reducers/studentReducer";
+import indSubjectReducer from "./reducers/indSubjectReducer";
 import auth from "./reducers/auth"
 import { composeWithDevTools } from "redux-devtools-extension";
 import setAuthorizationToken from "./utils/setAuthorizationToken";
@@ -14,6 +15,7 @@ const initialState = [];
 const rootReducer = combineReducers({
   subjectReducer,
   studentReducer,
+  indSubjectReducer,
   auth,
 });
 const middleware = [thunk];
