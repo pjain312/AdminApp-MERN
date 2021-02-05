@@ -67,7 +67,7 @@ const AllStudents = ({ studentReducer, getStudentSubjects,deleteStudent, addStud
                                     <Modal isOpen={modal} toggle={toggle}>
                                         <ModalHeader toggle={toggle}> Subjects</ModalHeader>
                                         <ModalBody>
-                                            <form onSubmit={(e) => handleStudentSubjects(e, res._id, selected)}>
+                                            <form onSubmit={(e) => {handleStudentSubjects(e, res._id, selected); setSelected([]);}}>
                                                 {
                                                     typeof (subjects) !== "undefined" ?
                                                         (subjects.length !== 0) ?
@@ -86,7 +86,7 @@ const AllStudents = ({ studentReducer, getStudentSubjects,deleteStudent, addStud
                                                         :
                                                         console.log("not now")
                                                 }
-                                                <button type="submit"> Add Subjects</button>
+                                                <button onClick = {()=> setModal(!modal)} type="submit"> Add Subjects</button>
                                             </form>
                                         </ModalBody>
                                     </Modal>

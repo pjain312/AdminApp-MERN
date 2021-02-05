@@ -155,14 +155,11 @@ export const addStudentSubjects = (id, selected) => {
     return async (dispatch) => {
         try {
             console.log("selected in action" , selected)
-            const { data } = await axios.post('http://localhost:8000/api/v1/addStudentSubjects',{
+             await axios.post('http://localhost:8000/api/v1/addStudentSubjects',{
                 id: id,
                 selected:selected
             });
-            dispatch({
-                type: UPLOAD_MARKS,
-                payload: data
-            });
+        
             await alert("Subjects Added Successfully");
         }
 
