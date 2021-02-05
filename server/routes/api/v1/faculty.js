@@ -13,6 +13,6 @@ router.post('/uploadMarks',facultyController.uploadMarks);
 router.post('/sendmail', facultyController.sendResult);
 router.get ('/studentSubjects', facultyController.getStudentSubjects);
 router.post('/addStudentSubjects', facultyController.addStudentSubjects);
-
+router.get('/delete-student', facultyController.deleteStudent);
 module.exports = router;
 

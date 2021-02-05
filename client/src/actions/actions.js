@@ -1,5 +1,5 @@
 import {ADD_FACULTY, ADD_STUDENT, ADD_SUBJECT, GET_STUDENTS, GET_SUBJECTS,GET_STUDENT_SUBJECTS, SET_CURR_USER,
-     UPLOAD_MARKS,SEND_MAIL} from './action-types';
+    DELETE_STUDENT, UPLOAD_MARKS,SEND_MAIL} from './action-types';
 import axios from 'axios';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import jwt from 'jsonwebtoken';
@@ -168,6 +168,28 @@ export const addStudentSubjects = (id, selected) => {
 
         catch (err) {
             console.log('error in Adding Student Subjects', err);
+            
+        }
+    }
+}
+
+export const deleteStudent = (id) => {
+    return async (dispatch) => {
+        try {
+            const data  = await axios.get('http://localhost:8000/api/v1/delete-student',{
+                params: {
+                  id: id
+                }
+              });
+            dispatch({
+                type: DELETE_STUDENT,
+                payload: data.data
+            });
+            await alert("Student deleted successfully");
+        }
+
+        catch (err) {
+            console.log('error in fetching students subjects', err);
             
         }
     }

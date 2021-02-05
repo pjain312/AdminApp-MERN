@@ -9,7 +9,7 @@ const subjectReducer= (state = initialState, action) => {
     return[...state, action.payload]
     
     case GET_STUDENT_SUBJECTS:
-      return[...state, action.payload]
+      return[action.payload]
 
     default:
         return state  

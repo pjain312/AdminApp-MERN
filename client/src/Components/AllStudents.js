@@ -3,10 +3,11 @@ import '../style/form.css';
 import { connect } from 'react-redux';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import {FaTrash} from 'react-icons/fa'
 
-import {  getStudentSubjects, addStudentSubjects } from '../actions/actions'
+import {  getStudentSubjects, addStudentSubjects, deleteStudent } from '../actions/actions'
 
-const AllStudents = ({ studentReducer, getStudentSubjects, addStudentSubjects, subjectReducer }) => {
+const AllStudents = ({ studentReducer, getStudentSubjects,deleteStudent, addStudentSubjects, subjectReducer }) => {
 
 
     const handleSubjects = (e, id) => {
@@ -16,6 +17,11 @@ const AllStudents = ({ studentReducer, getStudentSubjects, addStudentSubjects, s
     const handleStudentSubjects = (e, id, selected) => {
         e.preventDefault();
         addStudentSubjects(id, selected);
+    }
+
+    const handleDelete =(e, id) => {
+        e.preventDefault();
+        deleteStudent(id);
     }
 
     const students = studentReducer[0];
@@ -64,7 +70,9 @@ const AllStudents = ({ studentReducer, getStudentSubjects, addStudentSubjects, s
                                             <form onSubmit={(e) => handleStudentSubjects(e, res._id, selected)}>
                                                 {
                                                     typeof (subjects) !== "undefined" ?
+                                                        (subjects.length !== 0) ?
                                                         subjects.map((sub, index) =>
+                                                        
                                                             <div key = {index}>
                                                                 <label>{sub.subjectName}
                                                                     <input type="checkbox" name={sub.subjectName} value={value} onChange={(e) => {
@@ -74,6 +82,7 @@ const AllStudents = ({ studentReducer, getStudentSubjects, addStudentSubjects, s
                                                                 </label>
                                                             </div>
                                                         )
+                                                        :(<div> No subjects for this year</div>)
                                                         :
                                                         console.log("not now")
                                                 }
@@ -81,6 +90,9 @@ const AllStudents = ({ studentReducer, getStudentSubjects, addStudentSubjects, s
                                             </form>
                                         </ModalBody>
                                     </Modal>
+                                    <td>
+                                        <FaTrash onClick ={(e)=>{handleDelete(e, res._id)}} />
+                                    </td>
                                 </tr>
                             )
                         }
@@ -106,6 +118,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         addStudentSubjects: (id, selected) => {
                 dispatch(addStudentSubjects(id, selected));
+        },
+        deleteStudent: (id) => {
+            dispatch(deleteStudent(id));
         },
     };
 

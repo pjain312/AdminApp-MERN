@@ -8,3 +8,4 @@ export const UPLOAD_MARKS = "UPLOAD_MARKS";
 export const SET_CURR_USER = "SET_CURR_USER";
 export const SEND_MAIL = "SEND_MAIL";
 export const GET_MARKS_SUBJECTS = "GET_MARKS_SUBJECTS";
+export const DELETE_STUDENT = "DELETE_STUDENT";

@@ -28,7 +28,7 @@ module.exports = {
                 joiningYear
             })
             await newFaculty.save()
-            
+
             res.status(200).json({ result: newFaculty });
             res.redirect('/login')
         }
@@ -87,7 +87,7 @@ module.exports = {
                 fatherMobileNumber
             })
             await newStudent.save()
-    
+
             res.status(200).json({ result: newStudent })
         }
         catch (err) {
@@ -100,12 +100,12 @@ module.exports = {
         try {
 
             const id = req.query.id;
-            
+
             const student = await Student.findOne({ "_id": id });
 
             const year = student.year;
             const subjects = await Subject.find({ year })
-            
+
             res.status(200).json(subjects);
         }
         catch (err) {
@@ -121,7 +121,7 @@ module.exports = {
 
             var myquery = { _id: id };
 
-            for(const item in selected){
+            for (const item in selected) {
 
                 var newvalues = { $push: { subjects: selected[item] } };
                 Student.updateOne(myquery, newvalues, function (err, res) {
@@ -152,6 +152,22 @@ module.exports = {
             res.status(400).json({ message: `error in getting all student", ${err.message}` })
         }
 
+    },
+
+    deleteStudent: async (req, res, next) => {
+        try {
+            const id = req.query.id
+            Student.findByIdAndDelete(id, function (err) {
+                if (err) {
+                    console.log('err in deleting a Student from DB');
+                    return;
+                }
+                 res.status(200).json({message: "Subject deleted successfully"});
+            });
+        }
+        catch(err){
+            res.status(400).json({message: `error in deleting student", ${err.message}`})
+        }
     },
 
     addSubject: async (req, res, next) => {
