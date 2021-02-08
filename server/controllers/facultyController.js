@@ -157,7 +157,7 @@ module.exports = {
     deleteStudent: async (req, res, next) => {
         try {
             const id = req.query.id
-            Student.findByIdAndDelete(id, function (err) {
+            await Student.findByIdAndDelete(id, function (err) {
                 if (err) {
                     console.log('err in deleting a Student from DB');
                     return;

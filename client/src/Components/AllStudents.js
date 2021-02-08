@@ -68,11 +68,10 @@ const AllStudents = ({ studentReducer, indSubjectReducer, getStudentSubjects, de
                                             <Collapse isOpen={isOpen}>
                                                 <Card>
                                                     <CardBody>
-                                                        {typeof (subjectFaq) !== "undefined" ?
+                                                        {indSubjectReducer.length !==0  &&
                                                             subjectFaq.map((faq) =>
                                                                 <p>{faq}</p>
-                                                            ) :
-                                                            console.log("")
+                                                            ) 
                                                         }
                                                     </CardBody>
                                                 </Card>
@@ -92,8 +91,8 @@ const AllStudents = ({ studentReducer, indSubjectReducer, getStudentSubjects, de
                                         <ModalBody>
                                             <form onSubmit={(e) => { handleStudentSubjects(e, res._id, selected); setSelected([]); }}>
                                                 {
-                                                    typeof (subjects) !== "undefined" ?
-                                                        (subjects.length !== 0) ?
+                                                   
+                                                        (subjectReducer.length !== 0) &&
                                                             subjects.map((sub, index) =>
 
                                                                 <div key={index}>
@@ -105,9 +104,7 @@ const AllStudents = ({ studentReducer, indSubjectReducer, getStudentSubjects, de
                                                                     </label>
                                                                 </div>
                                                             )
-                                                            : (<div> No subjects for this year</div>)
-                                                        :
-                                                        console.log("not now")
+                                                           
                                                 }
                                                 <button onClick={() => setModal(!modal)} type="submit"> Add Subjects</button>
                                             </form>

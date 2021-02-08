@@ -5,7 +5,6 @@ import {
 import axios from 'axios';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import jwt from 'jsonwebtoken';
-import 'react-toastify/dist/ReactToastify.css';
 
 export const setCurrUser = (user) => {
     return {
