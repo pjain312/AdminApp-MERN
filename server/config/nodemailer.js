@@ -7,15 +7,15 @@ const transport = nodemailer.createTransport({
     secure: true,
     debug: true,
     auth: {
-        user:"prachijain3102@gmail.com" ,
-        pass: "ebvcmrlpcpoxhgxs"
+        user:"" ,
+        pass: ""
     }
 })
 
 const sendMail = async (email, marks, totalMarks, subjectName) => {
     try {
         await transport.sendMail({
-            from:"prachijain3102@gmail.com" ,
+            from:"" ,
             to: email,
             subject:"Marks Upload",
             html: `<h1> Your marks are uploaded for ${subjectName} </h1>
